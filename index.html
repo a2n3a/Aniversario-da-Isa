@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Convite da Isabela 🌺</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Pacifico', cursive;
+      background: linear-gradient(120deg, #89f7fe, #ff9a9e);
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
+      overflow: hidden;
+      overflow: auto;
+      text-align: center;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    #tela-inicial, #convite {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    #tela-inicial.active, #convite.active {
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 30px;
+      padding: 30px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .image {
+      width: 100%;
+      border-radius: 20px;
+      animation: slideIn 1s ease;
+    }
+
+    h1 {
+      color: #ff4a91;
+      font-size: 2.5em;
+      margin: 20px 0;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    h2 {
+      color: #ff6a00;
+      font-size: 2em;
+      margin-bottom: 10px;
+      animation: pulse 2s infinite;
+    }
+
+    p {
+      color: #444;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      background: #00bcd4;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: #0097a7;
+      transform: scale(1.05);
+    }
+
+    #countdown {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #00897b;
+      font-weight: bold;
+      animation: pulse 2s infinite;
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      top: -20px;
+      animation: fall 3s linear;
+      border-radius: 50%;
+      z-index: 999;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    .surprise {
+      display: none;
+      margin-top: 20px;
+      font-size: 1.3em;
+      color: #e91e63;
+    }
+
+    .surprise.show {
+      display: block;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); color: #00bcd4; }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes slideIn {
+      from {transform: translateY(-100px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Tela inicial -->
+  <div id="tela-inicial" class="active">
+    <h1>💌 Você foi convidado(a)! 💌</h1>
+    <button onclick="abrirConvite()">Abrir Convite</button>
+  </div>
+
+  <!-- Convite principal -->
+  <div id="convite">
+    <div class="card">
+      <img src="img/lilo-e-stitch.png" alt="Lilo e Stitch" class="image" />
+      <h1>🌸 Aloha! 🌸</h1>
+      <p>Você está convidado para o aniversário da</p>
+      <h2>🎉 Isabela 🎉</h2>
+      <p><strong>📅 Dia:</strong> 25 de agosto<br><strong>🕕 Hora:</strong> 18:00<br><strong>📍 Local:</strong> Minha casa!</p>
+      <p>Contamos com a sua presença para celebrar este dia especial! 🌺</p>
+      <button onclick="celebrate()">Confirmar Presença 🌺</button>
+      <button onclick="mostrarSurpresa()">🎁 Clique para ver a surpresa</button>
+      <div class="surprise" id="surpresa">🎉 Você é muito especial! Te esperamos com muito carinho! 💖</div>
+    </div>
+  </div>
+
+  <!-- Música de fundo -->
+  <audio id="musica" autoplay loop>
+    <source src="audio/parabens.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Efeito de clique -->
+  <audio id="efeitoClique">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_a01f95ed56.mp3?filename=pop-94319.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function abrirConvite() {
+      document.getElementById("tela-inicial").classList.remove("active");
+      document.getElementById("convite").classList.add("active");
+      document.getElementById("musica").play();
+    }
+
+    function celebrate() {
+      document.getElementById("efeitoClique").play();
+      for (let i = 0; i < 60; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        confetti.style.animationDuration = 2 + Math.random() * 2 + "s";
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 4000);
+      }
+      alert("🎉 Sua presença foi confirmada! Te esperamos lá! 🌺");
+    }
+
+    function mostrarSurpresa() {
+      document.getElementById("efeitoClique").play();
+      document.getElementById("surpresa").classList.add("show");
+    }
+
+    const festa = new Date("2025-08-25T18:00:00");
+    const diasSpan = document.getElementById("days");
+
+    function atualizarContagem() {
+      const agora = new Date();
+      const tempoRestante = festa - agora;
+      const dias = Math.ceil(tempoRestante / (1000 * 60 * 60 * 24));
+      diasSpan.textContent = dias >= 0 ? dias : 0;
+    }
+
+    setInterval(atualizarContagem, 1000);
+    atualizarContagem();
+  </script>
+
+</body>
+</html>
+
